@@ -1,0 +1,37 @@
+[[language]]
+name="javascript"
+auto-format = true
+
+[language.formatter]
+command = "prettier"
+args = ["--parser=typescript"]
+
+## ---------------- ##
+
+[[language]]
+name = "typescript"
+auto-format = true
+
+[language.formatter]
+command = "prettier"
+args = ["--parser=typescript"]
+
+## ---------------- ##
+
+[[language]]
+name = "tsx"
+auto-format = true
+
+[language.formatter]
+command = "prettier"
+args = ["--parser=typescript"]
+
+## ---------------- ##
+
+[[language]]
+name = "jsx"
+auto-format = true
+
+[language.formatter]
+command = "prettier"
+args = ["--parser=typescript"]

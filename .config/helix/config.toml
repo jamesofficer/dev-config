@@ -1,0 +1,39 @@
+theme = "sonokai"
+
+[editor]
+auto-pairs = true
+auto-format = true
+true-color = true
+color-modes = true
+idle-timeout = 0
+# rulers = [120]
+completion-trigger-len = 1
+
+[editor.indent-guides]
+render = true
+character = "▏"
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = false
+
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+up = "no_op"
+down = "no_op"
+left = "no_op"
+right = "no_op"
+C-k = ["move_line_up", "move_line_up", "move_line_up", "move_line_up", "move_line_up", "move_line_up"]
+C-j = ["move_line_down", "move_line_down", "move_line_down", "move_line_down", "move_line_down", "move_line_down"]
+
+[keys.normal.space]
+x = { b = ":buffer-close", o = ":buffer-close-others", a = ":buffer-close-all"}
+
+[keys.insert]
+up = "no_op"
+down = "no_op"
+left = "no_op"
+right = "no_op"
+
