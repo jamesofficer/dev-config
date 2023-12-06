@@ -11,8 +11,10 @@ alias isf="cd ~/Code/instant-shared-functions/"
 
 alias neoconfig="cd ~/.config/nvim/ && nvim ."
 alias wezconfig="hx ~/.wezterm.lua"
-alias hxconfig="cd ~/.config/helix && hx config.toml"
+alias hxconfig="cd ~/.config/helix && hx ."
 alias zshrc="hx ~/.zshrc"
+
+alias lg="lazygit"
 
 alias zj="zellij"
 alias zjc="zellij -l compact"

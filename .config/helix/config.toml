@@ -3,11 +3,21 @@ theme = "sonokai"
 [editor]
 auto-pairs = true
 auto-format = true
-true-color = true
 color-modes = true
 idle-timeout = 0
+completion-trigger-len = 0
+cursorline = true
+true-color = true
+# bufferline = "multiple"
 # rulers = [120]
-completion-trigger-len = 1
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name"]
 
 [editor.indent-guides]
 render = true

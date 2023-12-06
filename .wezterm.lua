@@ -11,11 +11,12 @@ end)
 
 return {
   -- font = wezterm.font('Berkeley Mono', { weight = 500 }),
-  -- font = wezterm.font('CodeNewRoman Nerd Font', { weight = 500 }),
+  --  font = wezterm.font('CodeNewRoman Nerd Font', { weight = 500 }),
   -- font = wezterm.font('CaskaydiaCove Nerd Font', { weight = 500 }),
   -- font = wezterm.font("SFMono Nerd Font", { weight = 600 }),
-  -- font = wezterm.font("Comic Code", { weight = 600 }),
-  font = wezterm.font("Maple Mono", { weight = 600 }),
+  -- font = wezterm.font("Comic Code Ligatures", { weight = 600 }),
+  -- font = wezterm.font("Maple Mono", { weight = 600 }),
+  font = wezterm.font("Codelia Ligatures", { weight = 500 }),
   font_size = 14,
   line_height = 1.4,
   window_decorations = "RESIZE",
@@ -41,8 +42,8 @@ return {
       name = "unix",
     },
   },
-  default_gui_startup_args = {
-    "connect",
-    "unix",
-  },
+  -- default_gui_startup_args = {
+  --   "connect",
+  --   "unix",
+  -- },
 }

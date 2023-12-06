@@ -71,6 +71,9 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
 
+  -- Lsp Kind
+  'onsails/lspkind-nvim',
+
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
@@ -161,10 +164,8 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    main = 'ibl',
+    opts = {},
   },
 
   -- "gc" to comment visual regions/lines
@@ -283,12 +284,28 @@ vim.keymap.set('i', '<Up>', "<c-o>:echo 'Use k'<CR>")
 vim.keymap.set('i', '<Down>', "<c-o>:echo 'Use j'<CR>")
 
 vim.keymap.set('n', '<leader>e', '<CMD>:lua MiniFiles.open()<CR>', { desc = 'Open file browser' })
-vim.keymap.set('n', '<leader>z', '<CMD>:ZenMode<CR>', { desc = 'Toggle Zen Mode' })
+vim.keymap.set('n', '<leader>zz', '<CMD>:NoNeckPain<CR>', { desc = 'Toggle Centered Layout ([Z]en Mode)' })
+vim.keymap.set('n', '<leader>z1', '<CMD>:NoNeckPainResize 100<CR>', { desc = 'Resize (Small)' })
+vim.keymap.set('n', '<leader>z2', '<CMD>:NoNeckPainResize 150<CR>', { desc = 'Resize (Medium)' })
+vim.keymap.set('n', '<leader>z3', '<CMD>:NoNeckPainResize 200<CR>', { desc = 'Resize (Large)' })
 vim.keymap.set('n', '<leader>gg', '<CMD>:LazyGit<CR>', { desc = 'Toggle Lazygit' })
 
 vim.keymap.set('n', '<leader>bd', '<CMD>:bd<CR>', { desc = '[B]uffer [D]elete' })
 
 vim.keymap.set('n', '<leader>lr', '<CMD>:LspRestart<CR>', { desc = '[L]sp [R]estart' })
+
+-- Trouble
+vim.keymap.set('n', '<leader>dw', function()
+  require('trouble').toggle 'workspace_diagnostics'
+end, { desc = 'Open [D]iagnostics - Workspace' })
+
+vim.keymap.set('n', '<leader>dd', function()
+  require('trouble').toggle 'document_diagnostics'
+end, { desc = 'Open [D]iagnostics - Document' })
+
+vim.keymap.set('n', '<leader>dq', function()
+  require('trouble').toggle 'quickfix'
+end, { desc = 'Open Quickfix List' })
 
 require('mini.files').setup()
 ------------------------------
@@ -309,9 +326,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('telescope').setup {
   defaults = {
     mappings = {
+      n = {
+        ['<c-d>'] = require('telescope.actions').delete_buffer,
+      },
       i = {
         ['<C-u>'] = false,
-        ['<C-d>'] = false,
+        ['<c-d>'] = require('telescope.actions').delete_buffer,
+        -- ['<C-d>'] = false,
       },
     },
   },
@@ -323,6 +344,7 @@ pcall(require('telescope').load_extension, 'fzf')
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>r', require('telescope.builtin').resume, { desc = '[R]esume last search' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -505,13 +527,25 @@ mason_lspconfig.setup_handlers {
 }
 
 -- [[ Configure nvim-cmp ]]
--- See `:help cmp`
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
+local lspkind = require 'lspkind'
+
 cmp.setup {
+  formatting = {
+    format = lspkind.cmp_format {
+      mode = 'symbol',       -- show only symbol annotations
+      maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function(entry, vim_item)
+        return vim_item
+      end,
+    },
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -579,6 +613,18 @@ require('catppuccin').setup {
   background = {     -- :h background
     light = 'latte',
     dark = 'mocha',
+  },
+}
+require('nvim-treesitter.configs').setup {
+  textsubjects = {
+    enable = true,
+    prev_selection = ',', -- (Optional) keymap to select the previous selection
+    keymaps = {
+      ['.'] = 'textsubjects-smart',
+      [';'] = 'textsubjects-container-outer',
+      ['i;'] = 'textsubjects-container-inner',
+      ['i;'] = { 'textsubjects-container-inner', desc = 'Select inside containers (classes, functions, etc.)' },
+    },
   },
 }
 

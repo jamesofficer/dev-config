@@ -6,10 +6,15 @@ return {
   },
 
   {
+    'shortcuts/no-neck-pain.nvim',
+    version = '*',
+  },
+
+  {
     'folke/zen-mode.nvim',
     opts = {
       backdrop = 0.8,
-      width = 0.85,
+      width = 1,
     },
   },
 
@@ -73,5 +78,18 @@ return {
 
   {
     'mhartington/formatter.nvim',
+  },
+
+  {
+    'folke/trouble.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      position = 'bottom',
+      icons = true,
+      auto_close = true,
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
   },
 }
